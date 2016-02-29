@@ -225,7 +225,8 @@ class NeroEnvironment(OpenNero.Environment):
         self.stop_team_training(team)
         self.despawn_team(team)
         for agent in team.agents:
-            del self.states[agent]
+            if agent in self.states:
+                del self.states[agent]
     
     def spawn_team(self, team):
         for agent in team.agents:

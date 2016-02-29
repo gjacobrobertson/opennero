@@ -23,7 +23,7 @@ class NeroAgent(object):
     def initialize(self, init_info):
         self.actions = init_info.actions
         self.sensors = init_info.sensors
-        self.rewards = init_info.rewards
+        self.rewards = init_info.reward
         return True
 
     def destroy(self):
@@ -76,6 +76,7 @@ class NEATAgent(NeroAgent, OpenNero.AgentBrain):
         a state transition
         """
         # return action
+        self.last_reward = reward[0]
         self.org.fitness = self.fitness[0] / self.step
         return self.network_action(sensors)
 
@@ -87,6 +88,8 @@ class NEATAgent(NeroAgent, OpenNero.AgentBrain):
         if display_hint:
             if display_hint == 'fitness':
                 self.state.label = '%.2f' % self.org.fitness
+            elif display_hint == 'reward':
+                self.state.label = '%.2f' % self.last_reward
             elif display_hint == 'time alive':
                 self.state.label = str(self.org.time_alive)
             elif display_hint == 'hit points':

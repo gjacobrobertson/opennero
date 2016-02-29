@@ -101,7 +101,7 @@ class RTNEATTeam(NeroTeam):
         return agent.org.eliminate
 
     def reset(self, agent):
-        if agent.org.elminate:
+        if agent.org.eliminate:
             agent.org = self.rtneat.reproduce_one()
 
     def reset_all(self):
