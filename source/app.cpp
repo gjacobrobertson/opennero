@@ -33,13 +33,13 @@ namespace OpenNero
         using namespace irr::core;
 
         AppConfig appConfig;
-        
+
         if (!appConfig.ParseCommandLine(argc, argv)) {
             return -1;
         }
 
         OpenNero::Log::LogSystemInit(appConfig.LogFile);
-        
+
 		// read the application configuration
         //AppConfig appConfig = ReadAppConfig(argc, argv, "appConfig.py");
 

@@ -69,7 +69,7 @@ namespace OpenNero
         // Sometimes, if all organisms are beneath the minimum "time alive" threshold, no organism will be removed
         // If an organism *was* actually removed, then we can proceed with replacing it via the evolutionary process
         if (deadorg) {
-            LOG_F_DEBUG("ai.rtneat.evolve", "deadorg: " << deadorg->gnome->genome_id);
+            LOG_F_DEBUG("ai.rtneat", "deadorg: " << deadorg->gnome->genome_id << " fitness: " << deadorg->fitness);
             //Mark organism for elimination
             deadorg->eliminate = true;
 

@@ -11,18 +11,18 @@ namespace NEAT
 {
     U32 time_alive_minimum = 20;
     F64 trait_param_mut_prob = 0;
-    F64 trait_mutation_power = 0; // Power of mutation on a signle trait param 
+    F64 trait_mutation_power = 0; // Power of mutation on a signle trait param
     F64 linktrait_mut_sig = 0; // Amount that mutation_num changes for a trait change inside a link
-    F64 nodetrait_mut_sig = 0; // Amount a mutation_num changes on a link connecting a node that changed its trait 
-    F64 weight_mut_power = 0; // The power of a linkweight mutation 
-    F64 recur_prob = 0; // Prob. that a link mutation which doesn't have to be recurrent will be made recurrent 
+    F64 nodetrait_mut_sig = 0; // Amount a mutation_num changes on a link connecting a node that changed its trait
+    F64 weight_mut_power = 0; // The power of a linkweight mutation
+    F64 recur_prob = 0; // Prob. that a link mutation which doesn't have to be recurrent will be made recurrent
     F64 disjoint_coeff = 0;
     F64 excess_coeff = 0;
     F64 mutdiff_coeff = 0;
     F64 compat_threshold = 0;
-    F64 age_significance = 0; // How much does age matter? 
-    F64 survival_thresh = 0; // Percent of ave fitness for survival 
-    F64 mutate_only_prob = 0; // Prob. of a non-mating reproduction 
+    F64 age_significance = 0; // How much does age matter?
+    F64 survival_thresh = 0; // Percent of ave fitness for survival
+    F64 mutate_only_prob = 0; // Prob. of a non-mating reproduction
     F64 mutate_random_trait_prob = 0;
     F64 mutate_link_trait_prob = 0;
     F64 mutate_node_trait_prob = 0;
@@ -31,17 +31,17 @@ namespace NEAT
     F64 mutate_gene_reenable_prob = 0;
     F64 mutate_add_node_prob = 0;
     F64 mutate_add_link_prob = 0;
-    F64 interspecies_mate_rate = 0; // Prob. of a mate being outside species 
+    F64 interspecies_mate_rate = 0; // Prob. of a mate being outside species
     F64 mate_multipoint_prob = 0;
     F64 mate_multipoint_avg_prob = 0;
     F64 mate_singlepoint_prob = 0;
-    F64 mate_only_prob = 0; // Prob. of mating without mutation 
-    F64 recur_only_prob = 0; // Probability of forcing selection of ONLY links that are naturally recurrent 
-    S32 pop_size = 0; // Size of population 
-    S32 dropoff_age = 0; // Age where Species starts to be penalized 
-    S32 newlink_tries = 0; // Number of tries mutate_add_link will attempt to find an open link 
-    S32 print_every = 0; // Tells to print population to file every n generations 
-    S32 babies_stolen = 0; // The number of babies to siphen off to the champions 
+    F64 mate_only_prob = 0; // Prob. of mating without mutation
+    F64 recur_only_prob = 0; // Probability of forcing selection of ONLY links that are naturally recurrent
+    S32 pop_size = 0; // Size of population
+    S32 dropoff_age = 0; // Age where Species starts to be penalized
+    S32 newlink_tries = 0; // Number of tries mutate_add_link will attempt to find an open link
+    S32 print_every = 0; // Tells to print population to file every n generations
+    S32 babies_stolen = 0; // The number of babies to siphen off to the champions
     F64 backprop_learning_rate = 0; // Learning rate of back-propagation algorithm
     F64 max_link_weight = 3; // Link weights are capped at this (and negative of this) value
     MTRand NEATRandGen((U64)time(NULL)); //TODO: we should probably move the Mersenne Twister random generator to OpenNero common
@@ -173,7 +173,7 @@ namespace NEAT
     F64 fsigmoid(F64 activesum, F64 slope, F64 constant)
     {
         //RIGHT SHIFTED ---------------------------------------------------------
-        //return (1/(1+(exp(-(slope*activesum-constant))))); //ave 3213 clean on 40 runs of p2m and 3468 on another 40 
+        //return (1/(1+(exp(-(slope*activesum-constant))))); //ave 3213 clean on 40 runs of p2m and 3468 on another 40
         //41394 with 1 failure on 8 runs
 
         //LEFT SHIFTED ----------------------------------------------------------
@@ -280,4 +280,3 @@ namespace NEAT
     const std::string INDENT = "  ";
 
 } // end NEAT
-

@@ -56,7 +56,7 @@ namespace OpenNero
         void set_lifetime(size_t lifetime);
 
         /// Reproduces a new organism to replace a previously killed one
-        OrganismPtr reproduce_one();    
+        OrganismPtr reproduce_one();
 
         /// load info about this AI from the object template
         bool LoadFromTemplate( ObjectTemplatePtr objTemplate, const SimEntityData& data) { return true; }

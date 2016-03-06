@@ -4,11 +4,14 @@ import constants
 import OpenNero
 import agent as agents
 
+
 def factory(ai, *args):
     cls = ai_map.get(ai, NeroTeam)
     return cls(*args)
 
+
 class TeamEncoder(json.JSONEncoder):
+
     def default(self, obj):
         if isinstance(obj, NeroTeam):
             return {
@@ -17,11 +20,12 @@ class TeamEncoder(json.JSONEncoder):
                     {
                         'agent_ai': agent.ai_label(),
                         'args': agent.args()
-                    } 
+                    }
                     for agent in obj.agents
                 ]
             }
         return json.JSONEncoder.default(self, obj)
+
 
 def as_team(team_type, dct):
     if 'team_ai' in dct:
@@ -30,6 +34,7 @@ def as_team(team_type, dct):
             team.create_agent(a['agent_ai'], *a['args'])
         return team
     return dct
+
 
 class NeroTeam(object):
     """
@@ -41,7 +46,7 @@ class NeroTeam(object):
         self.color = constants.TEAM_LABELS[team_type]
         self.agents = set()
         self.dead_agents = set()
-    
+
     def create_agents(self, ai):
         for _ in range(constants.pop_size):
             self.create_agent(ai)
@@ -72,19 +77,21 @@ class NeroTeam(object):
 
     def is_destroyed(self):
         return len(self.agents) == 0 and len(self.dead_agents) > 0
-    
+
     def reset_all(self):
         self.agents |= self.dead_agents
         self.dead_agents = set()
 
+
 class RTNEATTeam(NeroTeam):
+
     def __init__(self, team_type):
         NeroTeam.__init__(self, team_type)
         self.pop = OpenNero.Population()
         self.rtneat = OpenNero.RTNEAT("data/ai/neat-params.dat",
-                                  self.pop,
-                                  constants.DEFAULT_LIFETIME_MIN,
-                                  constants.DEFAULT_EVOLVE_RATE)
+                                      self.pop,
+                                      constants.DEFAULT_LIFETIME_MIN,
+                                      constants.DEFAULT_EVOLVE_RATE)
         self.generation = 1
 
     def add_agent(self, a):
@@ -106,7 +113,7 @@ class RTNEATTeam(NeroTeam):
 
     def reset_all(self):
         NeroTeam.reset_all(self)
-        #TODO: Epoch can segfault without fitness differentials
+        # TODO: Epoch can segfault without fitness differentials
         if any([agent.org.fitness > 0 for agent in self.agents]):
             self.generation += 1
             self.pop.epoch(self.generation)

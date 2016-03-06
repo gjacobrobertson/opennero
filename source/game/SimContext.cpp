@@ -116,12 +116,12 @@ namespace OpenNero
     /// @param type initial type of the object (has to be smaller than BITMASK_SIZE)
     /// @param collision collision mask of the new object
     /// @return SimId of the newly added object
-    SimId SimContext::AddObject( const std::string& templateName, 
-                                const Vector3f& pos, 
-                                const Vector3f& rot, 
+    SimId SimContext::AddObject( const std::string& templateName,
+                                const Vector3f& pos,
+                                const Vector3f& rot,
                                 const Vector3f& scale,
                                 const std::string& label,
-                                uint32_t collision, 
+                                uint32_t collision,
                                 uint32_t type)
     {
         Assert( mpSimulation );
@@ -224,7 +224,7 @@ namespace OpenNero
 
         // shut down the AI system
         AIManager::instance().destroy();
-        
+
         // forget everything imported in script
         ScriptingEngine::instance().destroy();
 
@@ -270,11 +270,11 @@ namespace OpenNero
     {
         // This will cause Irrlicht to render the objects
         UpdateRenderSystem(dt);
-        
+
         // clear our lineset
         LineSet::instance().ClearSegments();
 
-        // This will look at any input from the user that happened since the 
+        // This will look at any input from the user that happened since the
         // previous call and run the corresponding (Python) actions. This can
         // potentially change a lot of things such as which mod we want to run.
         UpdateInputSystem(dt);
@@ -291,7 +291,7 @@ namespace OpenNero
         // as well as ModTick(dt) if it is defined
         UpdateScriptingSystem(dt);
     }
-    
+
     /// Update all the objects and render
     /// @param dt the time to increment by
     void SimContext::ProcessAnimationTick(float32_t dt, float32_t frac)
@@ -299,18 +299,18 @@ namespace OpenNero
         // This will cause Irrlicht to render the objects
         UpdateRenderSystem(dt);
 
-        // This will look at any input from the user that happened since the 
+        // This will look at any input from the user that happened since the
         // previous call and run the corresponding (Python) actions. This can
         // potentially change a lot of things such as which mod we want to run.
         UpdateInputSystem(dt);
-        
+
         // update the simulation
         if( mpSimulation )
         {
             mpSimulation->ProcessAnimationTick(frac);
         }
     }
-    
+
     /// Update the input system
     void SimContext::UpdateInputSystem(float32_t dt)
     {
@@ -346,7 +346,7 @@ namespace OpenNero
     {
         // update the scripting scheduler
         ScriptingEngine::instance().GetScheduler().ProcessEvents();
-        
+
         ScriptingEngine::instance().Tick(dt);
     }
 
@@ -378,7 +378,7 @@ namespace OpenNero
         if( mpGuiManager )
             mpGuiManager->RemoveAll();
     }
-    
+
     /// @param x screen x-coordinate for active camera
     /// @param y screen y-coordinate for active camera
     /// @return the SimEntity intersected first by the ray from the camera origin through the view plane
@@ -432,15 +432,15 @@ namespace OpenNero
     /// @param type bitmask of the objects to care about or 0 for 'check all'
     /// @param vis show rays?
     /// @param foundColor the color to use if vis is true and an intersection is found
-    /// @param noneColor the color to use if vis is true 
+    /// @param noneColor the color to use if vis is true
     /// @return first intersection info tuple(sim, hit) with SimEntityData sim and Vector3f hit (hit location) or ()
     /// Find the first object that intersects the specified ray
     bool SimContext::FindInRay( SimEntityData& hitEntity,
                                 Vector3f& hitPos,
-                                const Vector3f& origin, 
-                                const Vector3f& target, 
-                                const uint32_t& type, 
-                                const bool vis, 
+                                const Vector3f& origin,
+                                const Vector3f& target,
+                                const uint32_t& type,
+                                const bool vis,
                                 const SColor& foundColor,
                                 const SColor& noneColor
                               )
@@ -475,12 +475,12 @@ namespace OpenNero
         }
         return false;
 	}
-    
+
     /// Find the first object that intersects the specified ray
-    boost::python::tuple SimContext::PyFindInRay( const Vector3f& origin, 
-                                      const Vector3f& target, 
-                                      const uint32_t& type, 
-                                      const bool val, 
+    boost::python::tuple SimContext::PyFindInRay( const Vector3f& origin,
+                                      const Vector3f& target,
+                                      const uint32_t& type,
+                                      const bool val,
                                       const SColor& foundColor,
                                       const SColor& noneColor
                                     )
@@ -494,7 +494,7 @@ namespace OpenNero
         else
         {
             return boost::python::make_tuple();
-        }        
+        }
     }
 
     /// @param x screen x-coordinate for active camera
@@ -529,7 +529,7 @@ namespace OpenNero
     const std::string kCouldNotFindObjectWithId("Could not find object with id: ");
 
     /// @brief Sets the position of the SimEntity specified by id
-    void SimContext::SetObjectPosition( SimId id, const Vector3f& pos ) 
+    void SimContext::SetObjectPosition( SimId id, const Vector3f& pos )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -537,7 +537,7 @@ namespace OpenNero
     }
 
     /// @brief Sets the rotation of the SimEntity specified by id
-    void SimContext::SetObjectRotation( SimId id, const Vector3f& rot ) 
+    void SimContext::SetObjectRotation( SimId id, const Vector3f& rot )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -545,7 +545,7 @@ namespace OpenNero
     }
 
     /// @brief Sets the scale of the SimEntity specified by id
-    void SimContext::SetObjectScale( SimId id, const Vector3f& scale ) 
+    void SimContext::SetObjectScale( SimId id, const Vector3f& scale )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -553,7 +553,7 @@ namespace OpenNero
     }
 
     /// @brief Sets the label of the SimEntity specified by id
-    void SimContext::SetObjectLabel( SimId id, const std::string& label ) 
+    void SimContext::SetObjectLabel( SimId id, const std::string& label )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -561,7 +561,7 @@ namespace OpenNero
     }
 
     /// @brief Sets the override color of the SimEntity specified by id
-    void SimContext::SetObjectColor( SimId id, const SColor& color ) 
+    void SimContext::SetObjectColor( SimId id, const SColor& color )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -575,7 +575,7 @@ namespace OpenNero
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
 		return ent->GetSceneObject()->SetAnimation(animationType);
 	}
-    
+
     void SimContext::SetObjectAnimationSpeed( SimId id, float32_t framesPerSecond  )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
@@ -586,14 +586,14 @@ namespace OpenNero
     void SimContext::SetObjectBrain( SimId id, AgentBrainPtr brain )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
-        AssertMsg(end, kCouldNotFindObjectWithId << id);
+        AssertMsg(ent, kCouldNotFindObjectWithId << id);
         ent->SetBrain(brain);
     }
 
     void SimContext::InitObjectBrain( SimId id, AgentBrainPtr brain )
     {
         SimEntityPtr ent = mpSimulation->Find(id);
-        AssertMsg(end, kCouldNotFindObjectWithId << id);
+        AssertMsg(ent, kCouldNotFindObjectWithId << id);
         ent->InitializeBrain(brain);
     }
 
@@ -606,7 +606,7 @@ namespace OpenNero
     }
 
     /// @brief Return the position of the SimEntity specified by id
-    Vector3f SimContext::GetObjectPosition( SimId id ) const 
+    Vector3f SimContext::GetObjectPosition( SimId id ) const
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -614,7 +614,7 @@ namespace OpenNero
     }
 
     /// @brief Return the rotation of the SimEntity specified by id
-    Vector3f SimContext::GetObjectRotation( SimId id ) const 
+    Vector3f SimContext::GetObjectRotation( SimId id ) const
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -622,7 +622,7 @@ namespace OpenNero
     }
 
     /// @brief Return the scale of the SimEntity specified by id
-    Vector3f SimContext::GetObjectScale( SimId id ) const 
+    Vector3f SimContext::GetObjectScale( SimId id ) const
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -630,7 +630,7 @@ namespace OpenNero
     }
 
     /// @brief Return the label of the SimEntity specified by id
-    std::string SimContext::GetObjectLabel( SimId id ) const 
+    std::string SimContext::GetObjectLabel( SimId id ) const
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
@@ -638,20 +638,20 @@ namespace OpenNero
     }
 
     /// @brief Return the override color of the SimEntity specified by id
-    SColor SimContext::GetObjectColor( SimId id ) const 
+    SColor SimContext::GetObjectColor( SimId id ) const
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
         return ent->GetColor();
     }
-    
+
     std::string SimContext::GetObjectAnimation( SimId id ) const
     {
         SimEntityPtr ent = mpSimulation->Find(id);
         AssertMsg(ent, kCouldNotFindObjectWithId << id);
         return ent->GetSceneObject()->GetAnimation();
     }
-    
+
     F32 SimContext::GetObjectAnimationSpeed( SimId id ) const
     {
         SimEntityPtr ent = mpSimulation->Find(id);

@@ -13,6 +13,7 @@ class AgentState:
     """
     State that we keep for each agent
     """
+
     def __init__(self, agent):
         self.id = agent.state.id
         self.agent = agent
@@ -30,8 +31,10 @@ class AgentState:
             (self.id, x, y, h, px, py, ph)
 
     def randomize(self, x, y):
-        dx = random.randrange(constants.SPAWN_RANGE * 2) - constants.SPAWN_RANGE
-        dy = random.randrange(constants.SPAWN_RANGE * 2) - constants.SPAWN_RANGE
+        dx = random.randrange(constants.SPAWN_RANGE * 2) - \
+            constants.SPAWN_RANGE
+        dy = random.randrange(constants.SPAWN_RANGE * 2) - \
+            constants.SPAWN_RANGE
         self.initial_position.x = x + dx
         self.initial_position.y = y + dy
         self.prev_pose = self.pose = (self.initial_position.x,
@@ -53,8 +56,10 @@ class AgentState:
     def update_pose(self, move_by, turn_by):
         dist = constants.MAX_MOVEMENT_SPEED * move_by
         heading = common.wrap_degrees(self.agent.state.rotation.z, turn_by)
-        x = self.agent.state.position.x + dist * math.cos(math.radians(heading))
-        y = self.agent.state.position.y + dist * math.sin(math.radians(heading))
+        x = self.agent.state.position.x + \
+            dist * math.cos(math.radians(heading))
+        y = self.agent.state.position.y + \
+            dist * math.sin(math.radians(heading))
 
         self.prev_pose = self.pose
         self.pose = (x, y, heading)
@@ -75,6 +80,7 @@ class NeroEnvironment(OpenNero.Environment):
     """
     Environment for the Nero
     """
+
     def __init__(self):
         """
         Create the environment
@@ -100,46 +106,52 @@ class NeroEnvironment(OpenNero.Environment):
             constants.OBJECT_TYPE_TEAM_0: y,
             constants.OBJECT_TYPE_TEAM_1: 2 * y
         }
-        self.reward_weights = dict((f, 0.) for f in constants.FITNESS_DIMENSIONS)
-        
+        self.reward_weights = dict((f, 0.)
+                                   for f in constants.FITNESS_DIMENSIONS)
+
     def setup(self):
         # world walls
         height = constants.HEIGHT + constants.OFFSET
         common.addObject(
             "data/shapes/cube/Cube.xml",
-            OpenNero.Vector3f(constants.XDIM/2, 0, height),
+            OpenNero.Vector3f(constants.XDIM / 2, 0, height),
             OpenNero.Vector3f(0, 0, 90),
-            scale=OpenNero.Vector3f(constants.WIDTH, constants.XDIM, constants.HEIGHT*2),
+            scale=OpenNero.Vector3f(
+                constants.WIDTH, constants.XDIM, constants.HEIGHT * 2),
             label="World Wall0",
             type=constants.OBJECT_TYPE_OBSTACLE)
         common.addObject(
             "data/shapes/cube/Cube.xml",
-            OpenNero.Vector3f(0, constants.YDIM/2, height),
+            OpenNero.Vector3f(0, constants.YDIM / 2, height),
             OpenNero.Vector3f(0, 0, 0),
-            scale=OpenNero.Vector3f(constants.WIDTH, constants.YDIM, constants.HEIGHT*2),
+            scale=OpenNero.Vector3f(
+                constants.WIDTH, constants.YDIM, constants.HEIGHT * 2),
             label="World Wall1",
             type=constants.OBJECT_TYPE_OBSTACLE)
         common.addObject(
             "data/shapes/cube/Cube.xml",
-            OpenNero.Vector3f(constants.XDIM, constants.YDIM/2, height),
+            OpenNero.Vector3f(constants.XDIM, constants.YDIM / 2, height),
             OpenNero.Vector3f(0, 0, 0),
-            scale=OpenNero.Vector3f(constants.WIDTH, constants.YDIM, constants.HEIGHT*2),
+            scale=OpenNero.Vector3f(
+                constants.WIDTH, constants.YDIM, constants.HEIGHT * 2),
             label="World Wall2",
             type=constants.OBJECT_TYPE_OBSTACLE)
         common.addObject(
             "data/shapes/cube/Cube.xml",
-            OpenNero.Vector3f(constants.XDIM/2, constants.YDIM, height),
+            OpenNero.Vector3f(constants.XDIM / 2, constants.YDIM, height),
             OpenNero.Vector3f(0, 0, 90),
-            scale=OpenNero.Vector3f(constants.WIDTH, constants.XDIM, constants.HEIGHT*2),
+            scale=OpenNero.Vector3f(
+                constants.WIDTH, constants.XDIM, constants.HEIGHT * 2),
             label="World Wall3",
             type=constants.OBJECT_TYPE_OBSTACLE)
 
         # Add an obstacle wall in the middle
         common.addObject(
             "data/shapes/cube/Cube.xml",
-            OpenNero.Vector3f(constants.XDIM/2, constants.YDIM/2, height),
+            OpenNero.Vector3f(constants.XDIM / 2, constants.YDIM / 2, height),
             OpenNero.Vector3f(0, 0, 90),
-            scale=OpenNero.Vector3f(constants.WIDTH, constants.YDIM / 4, constants.HEIGHT*2),
+            scale=OpenNero.Vector3f(
+                constants.WIDTH, constants.YDIM / 4, constants.HEIGHT * 2),
             label="World Wall4",
             type=constants.OBJECT_TYPE_OBSTACLE)
 
@@ -149,7 +161,8 @@ class NeroEnvironment(OpenNero.Environment):
                 # don't collide with trees - they are over 500 triangles each
                 common.addObject(
                     "data/shapes/tree/Tree.xml",
-                    OpenNero.Vector3f(i * constants.XDIM, j * constants.YDIM, constants.OFFSET),
+                    OpenNero.Vector3f(i * constants.XDIM, j *
+                                      constants.YDIM, constants.OFFSET),
                     OpenNero.Vector3f(0, 0, 0),
                     scale=OpenNero.Vector3f(1, 1, 1),
                     label="Tree %d %d" % (10 * i, 10 * j),
@@ -157,15 +170,16 @@ class NeroEnvironment(OpenNero.Environment):
                 # collide with their trunks represented with cubes instead
                 common.addObject(
                     "data/shapes/cube/Cube.xml",
-                    OpenNero.Vector3f(i * constants.XDIM, j * constants.YDIM, constants.OFFSET),
-                    OpenNero.Vector3f(0,0,0),
-                    scale=OpenNero.Vector3f(1,1,constants.HEIGHT),
+                    OpenNero.Vector3f(i * constants.XDIM, j *
+                                      constants.YDIM, constants.OFFSET),
+                    OpenNero.Vector3f(0, 0, 0),
+                    scale=OpenNero.Vector3f(1, 1, constants.HEIGHT),
                     type=constants.OBJECT_TYPE_OBSTACLE)
 
         # Add the surrounding Environment
         common.addObject(
             "data/terrain/NeroWorld.xml",
-            OpenNero.Vector3f(constants.XDIM/2, constants.YDIM/2, 0),
+            OpenNero.Vector3f(constants.XDIM / 2, constants.YDIM / 2, 0),
             scale=OpenNero.Vector3f(1.2, 1.2, 1.2),
             label="NeroWorld",
             type=constants.OBJECT_TYPE_LEVEL_GEOM)
@@ -227,13 +241,15 @@ class NeroEnvironment(OpenNero.Environment):
         for agent in team.agents:
             if agent in self.states:
                 del self.states[agent]
-    
+
     def spawn_team(self, team):
         for agent in team.agents:
             (x, y) = self.get_spawn(agent)
-            dx = random.randrange(constants.SPAWN_RANGE * 2) - constants.SPAWN_RANGE
-            dy = random.randrange(constants.SPAWN_RANGE * 2) - constants.SPAWN_RANGE
-            self.spawn_agent(agent, x+dx, y+dy)
+            dx = random.randrange(constants.SPAWN_RANGE *
+                                  2) - constants.SPAWN_RANGE
+            dy = random.randrange(constants.SPAWN_RANGE *
+                                  2) - constants.SPAWN_RANGE
+            self.spawn_agent(agent, x + dx, y + dy)
 
     def despawn_team(self, team):
         for agent in team.agents:
@@ -247,7 +263,8 @@ class NeroEnvironment(OpenNero.Environment):
 
     def spawn_agent(self, agent, x, y):
         simId = common.addObject(
-            "data/shapes/character/steve_%s.xml" % (constants.TEAM_LABELS[agent.team_type]),
+            "data/shapes/character/steve_%s.xml" % (
+                constants.TEAM_LABELS[agent.team_type]),
             OpenNero.Vector3f(x, y, 2),
             type=agent.team_type)
         common.initObjectBrain(simId, agent)
@@ -279,38 +296,40 @@ class NeroEnvironment(OpenNero.Environment):
         """
         for a in constants.WALL_RAY_SENSORS:
             agent.add_sensor(OpenNero.RaySensor(
-                    math.cos(math.radians(a)), math.sin(math.radians(a)), 0,
-                    constants.WALL_SENSOR_RADIUS,
-                    constants.OBJECT_TYPE_OBSTACLE,
-                    False))
+                math.cos(math.radians(a)), math.sin(math.radians(a)), 0,
+                constants.WALL_SENSOR_RADIUS,
+                constants.OBJECT_TYPE_OBSTACLE,
+                False))
         for a0, a1 in constants.FLAG_RADAR_SENSORS:
             agent.add_sensor(OpenNero.RadarSensor(
-                    a0, a1, -90, 90, constants.MAX_VISION_RADIUS,
-                    constants.OBJECT_TYPE_FLAG,
-                    False))
+                a0, a1, -90, 90, constants.MAX_VISION_RADIUS,
+                constants.OBJECT_TYPE_FLAG,
+                False))
         sense = constants.OBJECT_TYPE_TEAM_0
         if agent.team_type == sense:
             sense = constants.OBJECT_TYPE_TEAM_1
         for a0, a1 in constants.ENEMY_RADAR_SENSORS:
             agent.add_sensor(OpenNero.RadarSensor(
-                    a0, a1, -90, 90, constants.MAX_VISION_RADIUS,
-                    sense,
-                    False))
+                a0, a1, -90, 90, constants.MAX_VISION_RADIUS,
+                sense,
+                False))
         for a in constants.TARGETING_SENSORS:
             agent.add_sensor(OpenNero.RaySensor(
-                    math.cos(math.radians(a)), math.sin(math.radians(a)), 0,
-                    constants.TARGET_SENSOR_RADIUS,
-                    sense,
-                    False))
+                math.cos(math.radians(a)), math.sin(math.radians(a)), 0,
+                constants.TARGET_SENSOR_RADIUS,
+                sense,
+                False))
 
-        abound = OpenNero.FeatureVectorInfo() # actions
-        sbound = OpenNero.FeatureVectorInfo() # sensors
+        abound = OpenNero.FeatureVectorInfo()  # actions
+        sbound = OpenNero.FeatureVectorInfo()  # sensors
 
         # actions
-        abound.add_continuous(-1, 1) # forward/backward speed
-        abound.add_continuous(-constants.MAX_TURNING_RATE, constants.MAX_TURNING_RATE) # left/right turn (in radians)
-        abound.add_continuous(0, 1) # fire 
-        abound.add_continuous(0, 1) # omit friend sensors 
+        abound.add_continuous(-1, 1)  # forward/backward speed
+        # left/right turn (in radians)
+        abound.add_continuous(-constants.MAX_TURNING_RATE,
+                              constants.MAX_TURNING_RATE)
+        abound.add_continuous(0, 1)  # fire
+        abound.add_continuous(0, 1)  # omit friend sensors
 
         # sensor dimensions
         for a in range(constants.N_SENSORS):
@@ -343,7 +362,7 @@ class NeroEnvironment(OpenNero.Environment):
 
     def closest_enemy(self, agent):
         """
-        Returns the nearest enemy to agent 
+        Returns the nearest enemy to agent
         """
         friends, foes = self.get_friend_foe(agent)
         if not foes:
@@ -379,7 +398,7 @@ class NeroEnvironment(OpenNero.Environment):
         """
         state = self.get_state(agent)
 
-        #Initilize Agent state
+        # Initilize Agent state
         if agent.step == 0 and agent.group != "Turret":
             p = agent.state.position
             r = agent.state.rotation
@@ -413,8 +432,9 @@ class NeroEnvironment(OpenNero.Environment):
                     source_pos.z = source_pos.z + 5
                     closest_enemy_pos.z = closest_enemy_pos.z + 5
                     dist = closest_enemy_pos.getDistanceFrom(source_pos)
-                    d = (constants.MAX_SHOT_RADIUS - dist)/constants.MAX_SHOT_RADIUS
-                    if random.random() < d/2: # attempt a shot depending on distance
+                    d = (constants.MAX_SHOT_RADIUS - dist) / \
+                        constants.MAX_SHOT_RADIUS
+                    if random.random() < d / 2:  # attempt a shot depending on distance
                         team_color = constants.TEAM_LABELS[agent.team_type]
                         if team_color == 'red':
                             color = OpenNero.Color(255, 255, 0, 0)
@@ -430,12 +450,12 @@ class NeroEnvironment(OpenNero.Environment):
                             True,
                             wall_color,
                             color)
-                        #if len(obstacles) == 0 and random.random() < d/2:
+                        # if len(obstacles) == 0 and random.random() < d/2:
                         if len(obstacles) == 0:
                             # count as hit depending on distance
                             self.get_state(closest_enemy).curr_damage += 1
                             scored_hit = True
-                else: # turn toward the enemy
+                else:  # turn toward the enemy
                     turn_by = relative_angle
 
         # set animation speed
@@ -487,7 +507,7 @@ class NeroEnvironment(OpenNero.Environment):
 
         return reward
 
-    def calculate_reward(self, agent, action, scored_hit = False):
+    def calculate_reward(self, agent, action, scored_hit=False):
         reward = agent.rewards.get_instance()
 
         state = self.get_state(agent)
@@ -497,7 +517,8 @@ class NeroEnvironment(OpenNero.Environment):
             return reward
 
         R = dict((f, 0) for f in constants.FITNESS_DIMENSIONS)
-        W = dict((f, self.reward_weights[f]) for f in constants.FITNESS_DIMENSIONS)
+        W = dict((f, self.reward_weights[f])
+                 for f in constants.FITNESS_DIMENSIONS)
         dist_reward = lambda d: 1 / ((d * d / constants.MAX_DIST) + 1)
 
         R[constants.FITNESS_STAND_GROUND] = 1 - abs(action[0])
@@ -565,7 +586,8 @@ class NeroEnvironment(OpenNero.Environment):
                 value = 1 - (fd / constants.MAX_FRIEND_DISTANCE)
                 value = max(0, min(value, 1))
                 observations[constants.SENSOR_INDEX_FRIEND_RADAR[0]] = value
-                observations[constants.SENSOR_INDEX_FRIEND_RADAR[1]] = fh / 360.0
+                observations[
+                    constants.SENSOR_INDEX_FRIEND_RADAR[1]] = fh / 360.0
         return observations
 
     def distance(self, a, b):
@@ -626,11 +648,11 @@ class NeroEnvironment(OpenNero.Environment):
         team = self.get_team(agent)
 
         return dead or old or team.is_episode_over(agent)
-    
+
     def get_hitpoints(self, agent):
         damage = self.get_state(agent).total_damage
         if self.hitpoints > 0 and damage >= 0:
-            return float(self.hitpoints-damage)/self.hitpoints
+            return float(self.hitpoints - damage) / self.hitpoints
         else:
             return 0
 

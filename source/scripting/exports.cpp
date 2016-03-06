@@ -422,15 +422,19 @@ namespace OpenNero {
 
 			// export Network
       void (Network::*load_sensors)(const vector<F64>&) = &Network::load_sensors;
+      void (Network::*load_errors)(const vector<F64>&) = &Network::load_errors;
 			py::class_<Network, NetworkPtr>("Network", "an artificial neural network", no_init )
 				.def("load_sensors", load_sensors, "load sensor values into the network")
+        .def("load_errors", load_errors, "load error values in the network")
 				.def("activate", &Network::activate, "activate the network for one or more steps until signal reaches output")
+        .def("backprop", &Network::backprop, "backpropagate errors")
 				.def("flush", &Network::flush, "flush the network by clearing its internal state")
 				.def_readonly("outputs", &Network::outputs, "get output values from the network");
 
       // export NNode
       py::class_<NNode, NNodePtr>("NNode", "a node in a network", no_init)
-        .add_property("active_out", &NNode::get_active_out, "Get output of node");
+        .add_property("active_out", &NNode::get_active_out, "Get output of node")
+        .add_property("active_out_td", &NNode::get_active_out_td, "Get output of node for previous activation");
 
       py::class_< vector<NNodePtr> >("NNodeVector")
         .def(vector_indexing_suite< vector<NNodePtr>, true >());

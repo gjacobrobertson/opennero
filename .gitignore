@@ -17,4 +17,6 @@ java/OpenNERO/target
 /java/pyrolite-export/nbproject/private
 /java/pyrolite/target/
 /build/
+/debug/
+/release/
 .DS_Store
