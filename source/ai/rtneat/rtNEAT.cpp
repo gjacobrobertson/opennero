@@ -123,6 +123,17 @@ namespace OpenNero
         return new_org;
     }
 
+    OrganismPtr RTNEAT::reproduce_lamarckian()
+    {
+      vector<OrganismPtr>::iterator curorg;
+
+      for (curorg=mPopulation->organisms.begin(); curorg!=mPopulation->organisms.end(); ++curorg)
+      {
+        (*curorg)->update_genotype();
+      }
+      return this->reproduce_one();
+    }
+
     /// set the lifetime so that we can ensure that the units have been alive
     /// at least that long before evaluating them
     void RTNEAT::set_lifetime(size_t lifetime)

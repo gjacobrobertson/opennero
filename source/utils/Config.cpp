@@ -47,46 +47,46 @@ namespace OpenNero
     {
         try {
             TCLAP::CmdLine cmd("OpenNERO (command line interface)", ' ', "1.2");
-            
+
             namespace pt = boost::posix_time;
             pt::ptime t(pt::microsec_clock::local_time());
             //const string default_nero_log = "nero_log_" + pt::to_iso_string(t) + ".txt";
-            const string default_nero_log = "nero_log.txt";
-            
+            const string default_nero_log = "nero_log.log";
+
             // construct command line argument specs
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argLogFile("", "log", "log file name to use", false, default_nero_log, "filename");
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argTitle("", "title", "title for the window", false, "OpenNERO", "string");
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argLogConfigFile("", "log_config", "log config file name to use", false, "logConfig.py", "string");
-            TCLAP::SwitchArg 
+            TCLAP::SwitchArg
                 argHeadlessMode("", "headless", "run in headless mode without using the display");
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argStartMod("", "mod", "OpenNERO mod to start", false, "hub", "string");
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argStartModMode("", "modmode", "OpenNERO mod operating mode", false, "", "string");
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argStartModDir("", "modpath", "OpenNERO modpath to search for resources", false, "hub:common", "colon-separated path");
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argStartCommand("", "command", "Python command to run on startup", false, "", "Python command");
-            TCLAP::ValueArg<int> 
+            TCLAP::ValueArg<int>
                 argWidth("", "width", "Window width in pixels", false, 800, "integer");
-            TCLAP::ValueArg<int> 
+            TCLAP::ValueArg<int>
                 argHeight("", "height", "Window height in pixels", false, 600, "integer");
-            TCLAP::ValueArg<int> 
+            TCLAP::ValueArg<int>
                 argBPP("", "bpp", "Bitps per pixel to use", false, 16, "integer");
-            TCLAP::SwitchArg 
+            TCLAP::SwitchArg
                 argFullScreen("", "fullscreen", "Use the full screen mode", false);
-            TCLAP::SwitchArg 
+            TCLAP::SwitchArg
                 argStencilBuffer("", "stencil", "Use the stencil buffer", false);
-            TCLAP::SwitchArg 
+            TCLAP::SwitchArg
                 argVSync("", "vsync", "Use VSync", false);
-            TCLAP::ValueArg<std::string> 
+            TCLAP::ValueArg<std::string>
                 argRandomSeeds("", "random", "Random seeds to use", false, "12345", "numbers");
             TCLAP::ValueArg<float32_t>
                 argFrameDelay("", "delay", "the delay between AI frames to use for animation", false, 0.0, "seconds");
-            
+
             // add them to CmdLine object
             cmd.add(argLogFile);
             cmd.add(argTitle);
@@ -141,7 +141,7 @@ namespace OpenNero
             std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
             return false;
         }
-       
+
     }
 
     /// output AppConfig to stream

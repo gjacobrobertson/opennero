@@ -110,6 +110,8 @@ class RTNEATTeam(NeroTeam):
     def reset(self, agent):
         if agent.org.eliminate:
             agent.org = self.rtneat.reproduce_one()
+        else:
+            agent.org.update_phenotype()
 
     def reset_all(self):
         NeroTeam.reset_all(self)
@@ -120,8 +122,18 @@ class RTNEATTeam(NeroTeam):
             for agent, org in zip(self.agents, self.pop.organisms):
                 agent.org = org
 
+
+class LamarckianRTNEATTeam(RTNEATTeam):
+    def reset(self, agent):
+        if agent.org.eliminate:
+            agent.org = self.rtneat.reproduce_lamarckian()
+        else:
+            agent.org.update_phenotype()
+
+
 ai_map = {
     'rtneat': RTNEATTeam,
+    'lamarck': LamarckianRTNEATTeam,
     'none': NeroTeam
 }
 

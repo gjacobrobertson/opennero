@@ -20,3 +20,4 @@ java/OpenNERO/target
 /debug/
 /release/
 .DS_Store
+.atom-build.json

@@ -54,7 +54,7 @@ namespace OpenNero {
         object_(object)
       {}
 
-      std::streamsize read(char_type* buffer, std::streamsize buffer_size) 
+      std::streamsize read(char_type* buffer, std::streamsize buffer_size)
       {
         // Read data through the Python object's API.  The following is
         // is equivalent to:
@@ -438,7 +438,7 @@ namespace OpenNero {
 
       py::class_< vector<NNodePtr> >("NNodeVector")
         .def(vector_indexing_suite< vector<NNodePtr>, true >());
-      
+
 			// export Organism
       struct OrgWrap{
         static OrganismPtr init_from_stream(const py::object& data)
@@ -450,6 +450,8 @@ namespace OpenNero {
 
 			py::class_<Organism, OrganismPtr>("Organism", "a phenotype and a genotype for a neural network", init<double, GenomePtr, int>())
         .def("__init__", make_constructor(&OrgWrap::init_from_stream))
+				.def("update_genotype", &Organism::update_genotype, "Write net back to genome (For Lamarckian Evolution)")
+				.def("update_phenotype", &Organism::update_phenotype, "Recreate net from genome")
         .def_readonly("genome", &Organism::gnome, "Organism's genotype")
 				.def_readonly("net", &Organism::net, "neural network (phenotype)")
         .def_readonly("species", &Organism::species, "The organism's species")
@@ -480,9 +482,10 @@ namespace OpenNero {
 			// export RTNEAT interface
 			py::class_<RTNEAT, bases<AI>, RTNEATPtr>("RTNEAT", init<const std::string&, PopulationPtr, S32, S32>())
         .def("set_lifetime", &RTNEAT::set_lifetime, "set the lifetime of an agent")
-        .def("reproduce_one", &RTNEAT::reproduce_one, "Reproduce a new organism to replace a previously killed one");
+        .def("reproduce_one", &RTNEAT::reproduce_one, "Reproduce a new organism to replace a previously killed one")
+				.def("reproduce_lamarckian", &RTNEAT::reproduce_lamarckian, "Reproduce after updating population genotypes");
 		}
-        
+
 		/// the pickling suite for the Vector class
 		template <typename T>
 		struct irr_vector3d_pickle_suite : py::pickle_suite

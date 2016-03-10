@@ -17,7 +17,7 @@ def ModMain(mode=""):
     mod = NERO.module.getMod()
     mod.change_flag([constants.XDIM / 2.0, constants.YDIM * 2.0 / 3.0, 0])
     mod.set_weight(constants.FITNESS_APPROACH_FLAG, 1)
-    mod.deploy('none', 'neatq')
+    mod.deploy('lamarck', 'neatq')
     OpenNero.enable_ai()
 
 
@@ -43,4 +43,5 @@ def LogStats():
     min_fit = min(fitnesses)
     max_fit = max(fitnesses)
     mean_fit = sum(fitnesses) / len(fitnesses)
-    print "Minimum Fitness: %.2f Maximum Fitness: %.2f Average Fitness: %.2f" % (min_fit, max_fit, mean_fit)
+    print "Minimum Fitness: %.2f Maximum Fitness: %.2f Average Fitness: %.2f" %\
+        (min_fit, max_fit, mean_fit)
