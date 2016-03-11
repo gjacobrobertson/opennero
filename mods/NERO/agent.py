@@ -9,7 +9,7 @@ import OpenNero
 
 
 def factory_class(ai):
-    return ai_map.get(ai, NEATAgent)
+    return ai_map.get(ai)
 
 
 def factory(ai, *args):
@@ -165,7 +165,7 @@ class NEATAgent(NeroAgent, OpenNero.AgentBrain):
 
 class NEATQAgent(NEATAgent):
     num_outputs = NEATAgent.num_outputs + 1
-    sigma = 0.05
+    sigma = 0.1
     alpha = 0.95
 
     def __init__(self, *args):

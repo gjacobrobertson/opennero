@@ -97,6 +97,7 @@ def getMod():
     global gMod
     if not gMod:
         gMod = NeroModule()
+        print "MOD LOADED"
     return gMod
 
 script_server = None
@@ -122,7 +123,7 @@ def parseInput(strn):
 
             if msg_type == 'FitnessWeights':
                 parseInputFitness(content)
-                
+
             if msg_type == 'Command':
                 parseInputCommand(content)
 
@@ -136,7 +137,7 @@ def parseInputFitness(content):
         key = getattr(constants, 'FITNESS_' + dim, None)
         if key:
             mod.set_weight(key, val / 100.0)
-    
+
 def parseInputCommand(content):
     """
     Parse commands from training window

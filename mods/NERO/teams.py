@@ -6,7 +6,7 @@ import agent as agents
 
 
 def factory(ai, *args):
-    cls = ai_map.get(ai, NeroTeam)
+    cls = ai_map.get(ai)
     return cls(*args)
 
 
